@@ -1,7 +1,15 @@
+import ImageCarousel from "../../components/ImageCarousel/ImageCarousel";
+import { categoriesCarousel } from "../../data/categoriesBanner";
+import "./Home.scss";
+
 const Home = () => {
   return (
     <main>
-      <p>Home sendo carregada</p>
+      <ImageCarousel
+        images={categoriesCarousel}
+        title="Categorias de produtos"
+        subtitle="Selecione uma categoria e veja os produtos"
+      />
     </main>
   );
 };
