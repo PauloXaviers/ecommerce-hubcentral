@@ -1,0 +1,76 @@
+@use "../../styles/mixins" as mix;
+@use "../../styles/variables" as var;
+
+.container-carousel {
+  width: 100%;
+  max-width: 1300px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 20px;
+  h2 {
+    color: var.$gray-dark-color;
+    font-weight: var.$font-weight-bold;
+    line-height: 32px;
+    font-size: clamp(1.25rem, 2vw, 1.5rem);
+  }
+  h3 {
+    color: var.$gray-medium-color;
+    font-size: clamp(0.813rem, 2vw, 0.875rem);
+    font-weight: var.$font-weight-regular;
+    line-height: 20px;
+  }
+  .carousel {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    padding: 0px 20px;
+    .carousel-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      button {
+        cursor: pointer;
+        width: 100%;
+        min-width: 12.813rem;
+        min-height: 12.813rem;
+        transition: all 0.2s;
+        @media (max-width: 900px) {
+          min-width: 11.25rem;
+          min-height: 11.5rem;
+        }
+        flex-shrink: 0;
+        border: none;
+        background-size: cover;
+        background-position: center;
+
+        &:active {
+          cursor: grabbing;
+        }
+
+        &.center {
+          font-size: clamp(0.875rem, 2vw, 1rem);
+          color: var.$light-color;
+          font-weight: var.$font-weight-bold;
+        }
+
+        &.default {
+          border-radius: 0%;
+        }
+
+        &.full {
+          border-radius: 50%;
+        }
+      }
+      p {
+        color: var.$gray-dark-color;
+        font-size: clamp(0.875rem, 2vw, 1rem);
+        font-weight: var.$font-weight-regular;
+      }
+    }
+  }
+}
