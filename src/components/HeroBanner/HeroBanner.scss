@@ -1,0 +1,43 @@
+@use "../../styles/variables" as var;
+
+.hero-banner {
+  width: 100%;
+  height: clamp(25rem, 50vw, 42.188rem);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 35px;
+  h1 {
+    color: var.$light-color;
+    font-size: clamp(2.25rem, 5vw, 3.125rem);
+    font-weight: var.$font-weight-bold;
+    letter-spacing: 0.1px;
+  }
+  p {
+    color: var.$light-color;
+    font-size: clamp(0.875rem, 2vw, 1.25rem);
+    font-weight: var.$font-weight-regular;
+    letter-spacing: 0.2px;
+    span {
+      font-size: clamp(0.875rem, 2vw, 1.25rem);
+      font-weight: var.$font-weight-bold;
+      letter-spacing: 0.2px;
+      &.red-accent {
+        color: var.$red-accent-color;
+      }
+      &.red {
+        color: var.$red-color;
+      }
+      &.gray-medium {
+        color: var.$gray-medium-color;
+      }
+      &.blue {
+        color: var.$blue-color;
+      }
+      &.green {
+        color: var.$green-color;
+      }
+    }
+  }
+}
