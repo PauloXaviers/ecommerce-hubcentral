@@ -12,7 +12,7 @@ export const useProduct = create<UseProduct>((set, get) => ({
   skip: 0,
   products: null,
   selectedProduct: null,
-  hasMore: true,
+  hasMore: false,
   hasError: false,
   messageError: null,
   isLoading: false,
@@ -161,7 +161,7 @@ export const useProduct = create<UseProduct>((set, get) => ({
 
       set(() => ({
         skip: nextSkip,
-        products: [...products, ...newData],
+        products: products && [...products, ...newData],
         hasMore: true,
         hasError: false,
         messageError: null,
