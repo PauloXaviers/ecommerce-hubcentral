@@ -1,0 +1,52 @@
+@use "../../styles/mixins" as mix;
+@use "../../styles/variables" as var;
+
+.card {
+  border-radius: 5px;
+  background-color: var.$light-color;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.25);
+  padding: 15px;
+  gap: 10px;
+  border: none;
+  cursor: pointer;
+  h3 {
+    font-weight: var.$font-weight-bold;
+    color: var.$gray-dark-color;
+    font-size: clamp(0.875rem, 2vw, 1rem);
+  }
+  h4 {
+    font-weight: var.$font-weight-semibold;
+    color: var.$gray-medium-color;
+    font-size: clamp(0.813rem, 2vw, 0.875rem);
+  }
+  &.row {
+    @include mix.flex-center(row);
+    width: clamp(22.688rem, 30vw, 39.938rem);
+    height: fit-content;
+    text-align: start;
+    img {
+      max-height: 5rem;
+      height: 100%;
+      object-fit: contain;
+    }
+  }
+  &.column {
+    @include mix.flex-center(column);
+    width: clamp(11.625rem, 30vw, 14.938rem);
+    min-height: 23.688rem;
+    justify-content: start;
+    align-items: start;
+    text-align: start;
+    img {
+      width: 100%;
+      min-height: 15rem;
+      object-fit: contain;
+    }
+  }
+  .card-text {
+    @include mix.flex-center(column);
+    width: 100%;
+    align-items: start;
+    gap: 10px;
+  }
+}
