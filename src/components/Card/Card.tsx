@@ -17,7 +17,7 @@ const Card = ({
       onClick={onClick}
       aria-label={`${title}. ${description}`}
     >
-      <img src={image} alt={`Imagem de ${title}`} loading="lazy" />
+      <img src={image} alt={`Imagem de ${title}`} loading="lazy" className="card-image" draggable="false" />
       <div className="card-text">
         <h3>{title}</h3>
         <h4>{description.slice(0, 40)}...</h4>

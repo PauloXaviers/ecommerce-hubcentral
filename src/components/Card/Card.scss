@@ -24,7 +24,7 @@
     width: clamp(22.688rem, 30vw, 39.938rem);
     height: fit-content;
     text-align: start;
-    img {
+    .card-image {
       max-height: 5rem;
       height: 100%;
       object-fit: contain;
@@ -37,10 +37,16 @@
     justify-content: start;
     align-items: start;
     text-align: start;
-    img {
+    .card-image {
       width: 100%;
       min-height: 15rem;
       object-fit: contain;
+    }
+  }
+  .card-image {
+    &:hover {
+      transition: all 0.2s;
+      scale: (1.03);
     }
   }
   .card-text {
