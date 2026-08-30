@@ -18,7 +18,7 @@ const selectedItems = "select=id,title,description,price,category,rating,stock,i
 export const getAllProducts = async (skip: number): Promise<ApiResponse<Product[]>> => {
   try {
     const response: AxiosResponse<ProductListResponse> = await axios.get(
-      `https://dummyjson.com/products?${selectedItems}&limit=10&skip=${skip.toString()}`
+      `https://dummyjson.com/products?${selectedItems}&limit=12&skip=${skip.toString()}`
     );
     return { data: response.data.products, status: response.status };
   } catch (err) {

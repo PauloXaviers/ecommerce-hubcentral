@@ -139,7 +139,7 @@ export const useProduct = create<UseProduct>((set, get) => ({
   },
   loadMore: async () => {
     const { skip, lastFetch, products } = get();
-    const nextSkip = skip + 10;
+    const nextSkip = skip + 12;
     let newData: Product[];
     set(() => ({ isLoadingMore: true }));
     try {

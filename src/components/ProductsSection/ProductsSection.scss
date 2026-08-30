@@ -1,0 +1,52 @@
+@use "../../styles/mixins" as mix;
+@use "../../styles/variables" as var;
+
+.products-section {
+  width: 100%;
+  max-width: 1124px;
+  @include mix.flex-center(column);
+  overflow-x: hidden;
+  gap: 20px;
+  .title {
+    color: var.$gray-dark-color;
+    font-weight: var.$font-weight-bold;
+    font-size: clamp(1.25rem, 2vw, 1.5rem);
+    text-align: center;
+  }
+  p {
+    color: var.$gray-medium-color;
+    font-weight: var.$font-weight-regular;
+    font-size: clamp(0.875rem, 2vw, 1.25rem);
+    text-align: center;
+  }
+  .products-container {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(180px, 1fr));
+    justify-items: center;
+    gap: 5px 10px;
+    @media (min-width: 500px) {
+      grid-template-columns: repeat(auto-fit, minmax(186px, 1fr));
+      gap: 0px 50px;
+    }
+    .price-container {
+      @include mix.flex-center(row);
+      gap: 10px;
+      span {
+        font-size: clamp(0.65rem, 5vw, 0.775rem);
+        font-weight: var.$font-weight-bold;
+        color: var.$gray-light-color;
+        text-decoration: line-through;
+      }
+      p {
+        font-weight: var.$font-weight-bold;
+        color: var.$green-color;
+
+        font-size: clamp(0.75rem, 5vw, 0.875rem);
+      }
+    }
+  }
+  button {
+    margin: 20px 0;
+  }
+}
