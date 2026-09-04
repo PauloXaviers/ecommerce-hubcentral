@@ -1,7 +1,16 @@
+@use "../../styles/variables" as var;
+
 main {
   display: flex;
   flex-direction: column;
   justify-content: start;
   align-items: center;
   gap: 70px;
+}
+
+.promo-banner-dark {
+  background-color: var.$gray-dark-color;
+}
+.promo-banner-light {
+  background-color: var.$light-color;
 }

@@ -1,0 +1,51 @@
+@use "../../styles/mixins" as mix;
+@use "../../styles/variables" as var;
+
+.promo-banner {
+  width: 100%;
+  min-height: 50vh;
+  @include mix.flex-center(row);
+  padding: 10px 15px;
+  gap: 10px;
+  &.right {
+    flex-direction: row;
+  }
+  &.left {
+    flex-direction: row-reverse;
+  }
+
+  .promo-banner-texts {
+    @include mix.flex-center(column);
+    gap: 30px;
+    align-items: start;
+    .title {
+      font-size: clamp(1.5rem, 5vw, 2.5rem);
+      font-weight: var.$font-weight-bold;
+    }
+    p {
+      font-size: clamp(1rem, 2.5vw, 1.25rem);
+      font-weight: var.$font-weight-regular;
+    }
+    .dark {
+      color: var.$light-color;
+    }
+    .light {
+      color: var.$gray-dark-color;
+    }
+  }
+  img {
+    width: clamp(13.125rem, 20vw, 30rem);
+  }
+}
+
+@media screen and (min-width: 100px) and (max-width: 768px) {
+  .promo-banner {
+    height: auto;
+    &.left {
+      flex-direction: column-reverse;
+    }
+    &.right {
+      @include mix.flex-center(column);
+    }
+  }
+}
