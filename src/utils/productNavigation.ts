@@ -1,6 +1,6 @@
 import type { NavigateFunction, SetURLSearchParams } from "react-router-dom";
 
-type FetchType =
+export type FetchType =
   | { type: "product"; query: number }
   | { type: "category"; query: string }
   | { type: "search"; query: string };

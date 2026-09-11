@@ -6,11 +6,13 @@ main {
   justify-content: start;
   align-items: center;
   gap: 70px;
+  overflow-x: hidden !important;
 }
 
 .promo-banner-dark {
   background-color: var.$gray-dark-color;
 }
+
 .promo-banner-light {
   background-color: var.$light-color;
 }
