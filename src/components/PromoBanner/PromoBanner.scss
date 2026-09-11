@@ -3,9 +3,9 @@
 
 .promo-banner {
   width: 100%;
-  min-height: 50vh;
+  min-height: 60vh;
   @include mix.flex-center(row);
-  padding: 10px 15px;
+  padding: 10px 45px;
   gap: 10px;
   &.right {
     flex-direction: row;
@@ -16,10 +16,10 @@
 
   .promo-banner-texts {
     @include mix.flex-center(column);
-    gap: 30px;
+    gap: 15px;
     align-items: start;
     .title {
-      font-size: clamp(1.5rem, 5vw, 2.5rem);
+      font-size: clamp(1.3rem, 5vw, 2rem);
       font-weight: var.$font-weight-bold;
     }
     p {
@@ -46,6 +46,9 @@
     }
     &.right {
       @include mix.flex-center(column);
+    }
+    .promo-banner-texts{
+      padding: 20px 0;
     }
   }
 }
