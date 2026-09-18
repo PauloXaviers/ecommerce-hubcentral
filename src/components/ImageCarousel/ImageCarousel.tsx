@@ -13,6 +13,18 @@ interface ImageCarousel {
   handleClick?: (id: string) => void;
 }
 
+/**
+ * ImageCarousel component
+ * @param fetchType - Tipo de navegação quando um item é clicado.
+ * @param position - Posição de layout do rótulo
+ * @param className - Classes CSS adicionais aplicadas a cada botão do item.
+ * @param rounded - Estilo de arredondamento da borda.
+ * @param images - Array de objetos de imagem 
+ * @param titletag - Tag de cabeçalho usada para o título.
+ * @param title - Título opcional para o carrossel (usado para aria-label e cabeçalho visível).
+ * @param description - Texto de descrição opcional exibido abaixo do título.
+ */
+
 const ImageCarousel = ({
   position = "center",
   className,
