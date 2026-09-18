@@ -1,19 +1,16 @@
-import { motion } from 'motion/react';
-import { useRef, useEffect, useState } from 'react';
-import { useSearchParams, useNavigate, useLocation } from 'react-router-dom';
-import { type Image } from '../../types/categoriesImages';
-import { handleProductNavigation } from '../../utils/productNavigation';
-import './ImageCarousel.scss';
+import { motion } from "motion/react";
+import { useRef, useEffect, useState } from "react";
+import { type Image } from "../../types/categoriesImages";
+import "./ImageCarousel.scss";
 
-interface ImageCarouselProps {
-  fetchType: 'category' | 'search';
-  position?: 'center' | 'bottom';
+interface ImageCarousel {
+  position?: "center" | "bottom";
   className?: string;
-  rounded?: 'default' | 'full';
+  rounded?: "default" | "full";
   images: Image[];
-  titleTag?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
   title?: string;
-  description?: string;
+  subtitle?: string;
+  handleClick?: (id: string) => void;
 }
 
 /**
@@ -29,62 +26,43 @@ interface ImageCarouselProps {
  */
 
 const ImageCarousel = ({
-  fetchType,
-  position = 'center',
+  position = "center",
   className,
-  rounded = 'default',
+  rounded = "default",
   images,
-  titleTag: Component = 'h2',
   title,
-  description,
-}: ImageCarouselProps) => {
+  subtitle,
+  handleClick,
+}: ImageCarousel) => {
   const carousel = useRef<HTMLElement | null>(null);
   const [width, setWidth] = useState<number>(0);
-  const [isDragging, setIsDragging] = useState<boolean>(false);
-  const [, setSearchParams] = useSearchParams();
-  const { pathname } = useLocation();
-  const navigate = useNavigate();
 
   useEffect(() => {
-    setWidth(carousel.current.scrollWidth! - carousel.current.offsetWidth!);
+    setWidth(carousel.current?.scrollWidth - carousel.current?.offsetWidth);
   }, []);
-
-  const handleClick = (id: string) => {
-    if (!isDragging)
-      handleProductNavigation(navigate, setSearchParams, { type: fetchType, query: id }, pathname);
-  };
-
-  const onDragStart = () => setIsDragging(true);
-
-  const onDragEnd = () => setIsDragging(false);
 
   return (
     <motion.section
       className="container-carousel"
       ref={carousel}
-      aria-label={title || 'Carrossel de imagens'}
+      aria-label={title || "Carousel de categorias"}
     >
-      {title && <Component className="title">{title}</Component>}
-      {description && <p className="description">{description}</p>}
-      <motion.div
-        className="carousel"
-        drag="x"
-        onDragStart={onDragStart}
-        onDragEnd={onDragEnd}
-        dragConstraints={{ left: -(20 + width), right: 0 }}
-      >
+      {title && <h2>{title}</h2>}
+      {subtitle && <h3>{subtitle}</h3>}
+      <motion.div className="carousel" drag="x" dragConstraints={{ left: -(20 + width), right: 0 }}>
         {images.map((item) => (
           <div className="carousel-card" key={item.id}>
             <button
-              onClick={() => handleClick(item.id)}
+              key={item.id}
+              onClick={() => handleClick?.(item.id)}
               className={`${position} ${rounded} ${className}`}
               style={{ backgroundImage: `url(${item.url})` }}
-              aria-label={`Ver produtos de ${item.text || item.alt}`}
-              title={`Ver produtos de ${item.text || item.alt}`}
+              aria-label={`Categoria ${item.text}`}
+              title={`Ver produtos da categoria ${item.text}`}
             >
-              {position === 'center' && item.text}
+              {position === "center" && item.text}
             </button>
-            {position === 'bottom' && <p>{item.text}</p>}
+            {position === "bottom" && <p>{item.text}</p>}
           </div>
         ))}
       </motion.div>
