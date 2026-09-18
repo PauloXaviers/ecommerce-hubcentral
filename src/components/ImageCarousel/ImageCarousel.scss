@@ -1,5 +1,5 @@
-@use '../../styles/mixins' as mix;
-@use '../../styles/variables' as var;
+@use "../../styles/mixins" as mix;
+@use "../../styles/variables" as var;
 
 .container-carousel {
   width: 100%;
@@ -9,13 +9,13 @@
   align-items: center;
   flex-direction: column;
   gap: 20px;
-  .title {
+  h2 {
     color: var.$gray-dark-color;
     font-weight: var.$font-weight-bold;
     line-height: 32px;
     font-size: clamp(1.25rem, 2vw, 1.5rem);
   }
-  .description {
+  h3 {
     color: var.$gray-medium-color;
     font-size: clamp(0.813rem, 2vw, 0.875rem);
     font-weight: var.$font-weight-regular;
