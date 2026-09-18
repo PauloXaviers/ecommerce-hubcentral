@@ -9,6 +9,7 @@ import { useProduct } from '../../context/useProduct';
 import PromoBanner from '../../components/PromoBanner/PromoBanner';
 import modelTshirtImage from '../../assets/banners/tshirt-model.png';
 import iphoneImage from '../../assets/banners/Apple_iPhone-13-Pro_iPhone-13-Pro-Max_09142021_inline.jpg.large-Photoroom 1.png';
+import { brandsBanner } from '../../data/brandsBanner';
 
 const Home = () => {
   const products = useProduct((state) => state.products);
@@ -30,9 +31,10 @@ const Home = () => {
         buttonColor="red"
       />
       <ImageCarousel
+        fetchType="category"
         images={categoriesCarousel}
         title="Categorias de produtos"
-        subtitle="Selecione uma categoria e veja os produtos"
+        description="Selecione uma categoria e veja os produtos"
       />
       <ProductsSection
         products={products}
@@ -63,6 +65,15 @@ const Home = () => {
         image={iphoneImage}
         titleTag="h5"
         className="promo-banner-light"
+      />
+      <ImageCarousel
+        className="brands-section"
+        fetchType="search"
+        images={brandsBanner}
+        titleTag="h6"
+        rounded="full"
+        position="bottom"
+        title="Navegue entre nossos parceiros"
       />
     </main>
   );
