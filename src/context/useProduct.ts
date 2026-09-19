@@ -1,12 +1,12 @@
-import { create } from "zustand";
-import { type UseProduct } from "../types/useProduct";
+import { create } from 'zustand';
+import { type UseProduct } from '../types/useProduct';
 import {
   getAllProducts,
   getProductByCategory,
   searchProducts,
   getProductById,
-} from "../api/services/products";
-import type { Product } from "../types/product";
+} from '../api/services/products';
+import type { Product } from '../types/product';
 
 export const useProduct = create<UseProduct>((set, get) => ({
   skip: 0,
@@ -17,7 +17,7 @@ export const useProduct = create<UseProduct>((set, get) => ({
   messageError: null,
   isLoading: false,
   isLoadingMore: false,
-  lastFetch: { type: "default" },
+  lastFetch: { type: 'default' },
   getAllProducts: async () => {
     set(() => ({ isLoading: true }));
     try {
@@ -26,7 +26,7 @@ export const useProduct = create<UseProduct>((set, get) => ({
         skip: 0,
         products: response.data,
         hasMore: true,
-        lastFetch: { type: "default" },
+        lastFetch: { type: 'default' },
         hasError: false,
         messageError: null,
       }));
@@ -34,12 +34,12 @@ export const useProduct = create<UseProduct>((set, get) => ({
       if (err instanceof Error) {
         set(() => ({
           hasError: true,
-          messageError: "Erro ao obter produtos",
+          messageError: 'Erro ao obter produtos',
         }));
       } else {
         set(() => ({
           hasError: true,
-          messageError: "Erro em nossos servidores, por favor tente novamente mais tarde",
+          messageError: 'Erro em nossos servidores, por favor tente novamente mais tarde',
         }));
       }
     } finally {
@@ -49,32 +49,32 @@ export const useProduct = create<UseProduct>((set, get) => ({
   searchProducts: async (query: string) => {
     set(() => ({ isLoading: true }));
     try {
-      const response = await searchProducts(query, 0);
+      const response = await searchProducts(query);
       if (response.data.length === 0) {
         set(() => ({
           hasError: true,
-          messageError: "Produtos não encontrados",
+          messageError: 'Produtos não encontrados',
         }));
       } else {
         set(() => ({
           products: response.data,
-          hasMore: true,
+          hasMore: false,
           skip: 0,
-          lastFetch: { type: "search", query: query },
+          lastFetch: { type: 'search', query: query },
           hasError: false,
-          messageError: null,
+          messageError: "Não há mais produtos a serem carregados",
         }));
       }
     } catch (err) {
       if (err instanceof Error) {
         set(() => ({
           hasError: true,
-          messageError: "Erro ao buscar produtos",
+          messageError: 'Erro ao buscar produtos',
         }));
       } else {
         set(() => ({
           hasError: true,
-          messageError: "Erro em nossos servidores, por favor tente novamente mais tarde",
+          messageError: 'Erro em nossos servidores, por favor tente novamente mais tarde',
         }));
       }
     } finally {
@@ -89,7 +89,7 @@ export const useProduct = create<UseProduct>((set, get) => ({
         selectedProduct: response.data,
         hasMore: true,
         skip: 0,
-        lastFetch: { type: "default" },
+        lastFetch: { type: 'default' },
         hasError: false,
         messageError: null,
       }));
@@ -97,12 +97,12 @@ export const useProduct = create<UseProduct>((set, get) => ({
       if (err instanceof Error) {
         set(() => ({
           hasError: true,
-          messageError: "Erro ao obter produto",
+          messageError: 'Erro ao obter produto',
         }));
       } else {
         set(() => ({
           hasError: true,
-          messageError: "Erro em nossos servidores, por favor tente novamente mais tarde",
+          messageError: 'Erro em nossos servidores, por favor tente novamente mais tarde',
         }));
       }
     } finally {
@@ -117,7 +117,7 @@ export const useProduct = create<UseProduct>((set, get) => ({
         products: response.data,
         hasMore: true,
         skip: 0,
-        lastFetch: { type: "category", query: query },
+        lastFetch: { type: 'category', query: query },
         hasError: false,
         messageError: null,
       }));
@@ -125,12 +125,12 @@ export const useProduct = create<UseProduct>((set, get) => ({
       if (err instanceof Error) {
         set(() => ({
           hasError: true,
-          messageError: "Erro ao obter produtos",
+          messageError: 'Erro ao obter produtos',
         }));
       } else {
         set(() => ({
           hasError: true,
-          messageError: "Erro em nossos servidores, por favor tente novamente mais tarde",
+          messageError: 'Erro em nossos servidores, por favor tente novamente mais tarde',
         }));
       }
     } finally {
@@ -144,19 +144,18 @@ export const useProduct = create<UseProduct>((set, get) => ({
     set(() => ({ isLoadingMore: true }));
     try {
       switch (lastFetch.type) {
-        case "default":
+        case 'default':
           newData = (await getAllProducts(nextSkip)).data;
           break;
-        case "search":
-          newData = (await searchProducts(lastFetch.query, nextSkip)).data;
-          break;
-        case "category":
+        case 'search':
+          throw new Error('A busca não suporta carregamento adicional');
+        case 'category':
           newData = (await getProductByCategory(lastFetch.query, nextSkip)).data;
           break;
       }
 
       if (newData.length === 0 || !newData) {
-        throw new Error("Não há mais produtos a serem carregados");
+        throw new Error('Não há mais produtos a serem carregados');
       }
 
       set(() => ({
@@ -168,16 +167,21 @@ export const useProduct = create<UseProduct>((set, get) => ({
       }));
     } catch (err) {
       if (err instanceof Error) {
-        if (err.message === "Não há mais produtos a serem carregados") {
+        if (err.message === 'Não há mais produtos a serem carregados') {
           set(() => ({
             hasMore: false,
             hasError: false,
             messageError: err.message,
           }));
+        } else if (err.message === 'A busca não suporta carregamento adicional') {
+          set(() => ({
+            hasMore: false,
+            messageError: 'Não foi possível carregar mais produtos',
+          }));
         } else {
           set(() => ({
             hasError: true,
-            messageError: "Erro em nossos servidores, por favor tente novamente mais tarde",
+            messageError: 'Erro em nossos servidores, por favor tente novamente mais tarde',
           }));
         }
       }

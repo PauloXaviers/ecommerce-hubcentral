@@ -1,5 +1,5 @@
-import { type Product } from "../../types/product";
-import axios, { type AxiosResponse } from "axios";
+import { type Product } from '../../types/product';
+import axios, { type AxiosResponse } from 'axios';
 
 interface ProductListResponse {
   skip: number;
@@ -13,7 +13,7 @@ interface ApiResponse<T> {
   status: number;
 }
 
-const selectedItems = "select=id,title,description,price,category,rating,stock,images";
+const selectedItems = 'select=id,title,description,price,category,rating,stock,images';
 
 export const getAllProducts = async (skip: number): Promise<ApiResponse<Product[]>> => {
   try {
@@ -54,15 +54,18 @@ export const getProductByCategory = async (
   }
 };
 
-export const searchProducts = async (
-  query: string,
-  skip: number
-): Promise<ApiResponse<Product[]>> => {
+export const searchProducts = async (query: string): Promise<ApiResponse<Product[]>> => {
   try {
     const response: AxiosResponse<ProductListResponse> = await axios.get(
-      `https://dummyjson.com/products/search?q=${query}&${selectedItems}&limit=10&skip=${skip.toString()}`
+      `https://dummyjson.com/products?${selectedItems},tags&limit=194`
     );
-    return { data: response.data.products, status: response.status };
+
+    const { products } = response.data;
+
+    const filteredProducts = products.filter((item) =>
+      item.tags?.some((value) => value.toLowerCase().includes(query.trim().toLowerCase()))
+    );
+    return { data: filteredProducts, status: response.status };
   } catch (err) {
     console.error(err);
     throw err;
