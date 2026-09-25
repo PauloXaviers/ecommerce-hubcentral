@@ -1,0 +1,31 @@
+@use "../../styles/variables" as var;
+@use "../../styles/mixins" as mix;
+
+
+.social-media {
+    @include mix.flex-center(row);
+    gap: 15px;
+    height: 10rem;
+    width: 100%;
+    background-color: #fafafa;
+
+    p {
+        color: var.$gray-dark-color;
+        font-size: clamp(1rem, 2vw, 1.5rem);
+        font-weight: var.$font-weight-semibold;
+    }
+
+    a {
+        text-decoration: none;
+        box-sizing: border-box;
+
+        svg {
+            cursor: pointer;
+            transition: transform 0.2s ease-in-out;
+
+            &:hover {
+                transform: scale(1.1);
+            }
+        }
+    }
+}

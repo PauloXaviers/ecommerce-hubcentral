@@ -10,6 +10,7 @@ import PromoBanner from '../../components/PromoBanner/PromoBanner';
 import modelTshirtImage from '../../assets/banners/tshirt-model.png';
 import iphoneImage from '../../assets/banners/Apple_iPhone-13-Pro_iPhone-13-Pro-Max_09142021_inline.jpg.large-Photoroom 1.png';
 import { brandsBanner } from '../../data/brandsBanner';
+import SocialMedia from '../../components/SocialMedia/SocialMedia';
 
 const Home = () => {
   const products = useProduct((state) => state.products);
@@ -75,6 +76,7 @@ const Home = () => {
         position="bottom"
         title="Navegue entre nossos parceiros"
       />
+      <SocialMedia />
     </main>
   );
 };
