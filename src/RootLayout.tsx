@@ -1,6 +1,7 @@
-import { Outlet } from "react-router-dom";
-import Header from "./components/Header/Header";
-import { useRef, useEffect, useState } from "react";
+import { Outlet } from 'react-router-dom';
+import Header from './components/Header/Header';
+import { useRef, useEffect, useState } from 'react';
+import Footer from './components/Footer/Footer';
 
 const RootLayout = () => {
   const headerRef = useRef<HTMLElement>(null);
@@ -10,7 +11,7 @@ const RootLayout = () => {
     if (headerRef.current) {
       setHeaderHeight(headerRef.current.offsetHeight);
     }
-  }, []); 
+  }, []);
 
   return (
     <>
@@ -18,6 +19,7 @@ const RootLayout = () => {
       <div style={{ paddingTop: `${headerHeight}px` }}>
         <Outlet />
       </div>
+      <Footer />
     </>
   );
 };
