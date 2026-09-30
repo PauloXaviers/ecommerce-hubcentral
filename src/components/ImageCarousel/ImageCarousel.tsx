@@ -46,7 +46,9 @@ const ImageCarousel = ({
   const navigate = useNavigate();
 
   useEffect(() => {
-    setWidth(carousel.current?.scrollWidth - carousel.current?.offsetWidth);
+    if(carousel.current){
+      setWidth(carousel.current.scrollWidth - carousel.current.offsetWidth);
+    }
   }, []);
 
   const handleClick = (id: string) => {
