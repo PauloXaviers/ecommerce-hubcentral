@@ -1,0 +1,72 @@
+@use "../../styles/mixins" as mix;
+@use "../../styles/variables" as var;
+
+footer {
+    background-color: var.$light-color;
+    @include mix.flex-center(column);
+
+    .footer-main {
+        @include mix.flex-between(center, row);
+        height: 13rem;
+        width: 35%;
+
+        @media (max-width: 1000px) {
+            width: 90%;
+            @include mix.flex-center(column);
+            align-items: start;
+            gap: 5px;
+        }
+
+        .container-list {
+            height: 50%;
+            @media(max-width: 1000px){
+                height: auto;
+            }
+            p {
+                font-size: clamp(0.875rem, 1.5vw, 1rem);
+                color: var.$gray-dark-color;
+                font-weight: var.$font-weight-semibold;
+            }
+
+            ul {
+                list-style: none;
+                font-weight: var.$font-weight-bold;
+                @include mix.flex-center(column);
+                align-items: start;
+                gap: 5px;
+
+                li {
+                    cursor: pointer;
+
+                    a {
+                        display: block;
+                        text-decoration: none;
+                        color: var.$gray-medium-color;
+                        font-size: clamp(0.75rem, 1vw, 0.875rem);
+                        transition: transform 0.2s ease-in-out;
+                        padding: 8px;
+
+                        &:hover {
+                            transform: scale(1.05);
+                        }
+                    }
+                }
+            }
+
+
+        }
+
+    }
+
+    .copyright-container {
+        width: 100%;
+        @include mix.flex-center(row);
+        height: 4rem;
+        background-color: #fafafa;
+
+        p {
+            font-size: clamp(0.875rem, 1.5vw, 1rem);
+            color: var.$gray-medium-color;
+        }
+    }
+}
