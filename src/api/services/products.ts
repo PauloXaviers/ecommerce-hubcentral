@@ -45,7 +45,7 @@ export const getProductByCategory = async (
 ): Promise<ApiResponse<Product[]>> => {
   try {
     const response: AxiosResponse<ProductListResponse> = await axios.get(
-      `https://dummyjson.com/products/category/${query}?${selectedItems}&limit=10&skip=${skip.toString()}`
+      `https://dummyjson.com/products/category/${query}?${selectedItems}&limit=12&skip=${skip.toString()}`
     );
     return { data: response.data.products, status: response.status };
   } catch (err) {
@@ -62,8 +62,10 @@ export const searchProducts = async (query: string): Promise<ApiResponse<Product
 
     const { products } = response.data;
 
-    const filteredProducts = products.filter((item) =>
-      item.tags?.some((value) => value.toLowerCase().includes(query.trim().toLowerCase()))
+    const filteredProducts = products.filter(
+      (item) =>
+        item.tags?.some((value) => value.toLowerCase().includes(query.trim().toLowerCase())) ||
+        item.title.toLowerCase().includes(query.toLowerCase())
     );
     return { data: filteredProducts, status: response.status };
   } catch (err) {
