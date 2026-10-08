@@ -1,7 +1,6 @@
 import "./ProductsSection.scss";
 import { useProduct } from "../../context/useProduct";
 import { Button } from "../Button/Button";
-import type { Product } from "../../types/product";
 import { currencyFormatter } from "../../utils/currencyFormatter";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useLocation } from "react-router-dom";
@@ -11,7 +10,6 @@ import SkeletonCard from "../Card/SkeletonCard";
 import Card from "../Card/Card";
 
 type ProductsSectionProps = {
-  products: Product[] | null;
   headingTag?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
   title?: string;
   description?: string;
@@ -25,8 +23,8 @@ const ProductsSection = ({
   headingTag: Component = "h3",
   title,
   description,
-  products,
 }: ProductsSectionProps) => {
+  const products = useProduct((state) => state.products);
   const loadMore = useProduct((state) => state.loadMore);
   const isLoading = useProduct((state) => state.isLoading);
   const isLoadingMore = useProduct((state) => state.isLoadingMore);
