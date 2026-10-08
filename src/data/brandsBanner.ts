@@ -14,7 +14,7 @@ export const brandsBanner: Image[] = [
     text: 'Apple',
   },
   {
-    id: 'calvin-klein',
+    id: 'calvin klein',
     url: calvinKlein,
     alt: 'Calvin Klein',
     text: 'Calvin Klein',

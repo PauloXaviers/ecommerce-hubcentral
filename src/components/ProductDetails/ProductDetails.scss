@@ -1,0 +1,119 @@
+@use "../../styles/mixins" as mix;
+@use "../../styles/variables" as var;
+
+.product-main {
+    width: 100%;
+    gap: 20px 80px;
+    margin-bottom: 60px;
+
+    .product-images {
+        width: 100%;
+        max-width: 500px;
+        overflow-x: hidden;
+
+        img {
+            width: clamp(18rem, 100%, 33rem);
+        }
+
+        .carousel-images {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 5px;
+            padding: 10px 20px;
+
+            button {
+                flex-shrink: 0;
+                width: 9rem;
+                height: 9rem;
+                border: none;
+                border-radius: 10px;
+                box-shadow: 0 0 2px #00000040;
+                background-color: transparent;
+                cursor: pointer;
+
+                &:active {
+                    cursor: grabbing;
+                }
+            }
+        }
+    }
+
+    .product-content {
+        width: 90%;
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
+        align-items: start;
+        gap: 20px;
+
+        h1 {
+            font-size: clamp(1.25rem, 5vw, 1.5rem);
+            font-weight: var.$font-weight-bold;
+            color: var.$gray-dark-color;
+        }
+
+        p {
+            color: var.$gray-medium-color;
+            font-weight: var.$font-weight-semibold;
+            font-size: clamp(0.950rem, 2vw, 1.15rem);
+        }
+
+        .container {
+            display: flex;
+            gap: 10px;
+
+            .old-price {
+                font-size: clamp(0.875rem, 1.5vw, 1rem);
+                color: var.$gray-light-color;
+            }
+
+            .new-price {
+                font-size: clamp(0.938rem, 1.5vw, 1.25rem);
+                color: var.$green-color;
+            }
+        }
+
+    }
+}
+
+//estilização do componente skleton
+
+.product-content {
+    @media (max-width: 600px) {
+        span {
+            max-width: 300px;
+        }
+    }
+
+}
+
+
+@media (max-width: 999px) {
+    .product-main {
+        @include mix.flex-center(column);
+    }
+}
+
+@media (min-width: 1000px) {
+    .product-main {
+        @include mix.flex-center(row);
+        margin-bottom: 20px;
+    }
+
+    .carousel-images {
+        button {
+            min-width: 11.5rem;
+            height: 12.5rem;
+        }
+    }
+
+    .product-content {
+        min-height: 50vh;
+    }
+
+    .texts {
+        min-height: 50vh;
+    }
+}

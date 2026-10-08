@@ -13,12 +13,15 @@ import { brandsBanner } from '../../data/brandsBanner';
 import SocialMedia from '../../components/SocialMedia/SocialMedia';
 
 const Home = () => {
-  const products = useProduct((state) => state.products);
   const getAllProducts = useProduct((state) => state.getAllProducts);
 
   useEffect(() => {
     getAllProducts();
   }, [getAllProducts]);
+
+  useEffect(() => {
+    document.title = 'Ecommerce HubCentral';
+  }, []);
 
   return (
     <main>
@@ -38,7 +41,6 @@ const Home = () => {
         description="Selecione uma categoria e veja os produtos"
       />
       <ProductsSection
-        products={products}
         title="Produtos mais vendidos"
         headingTag="h3"
         description="Todos os produtos 50% off"

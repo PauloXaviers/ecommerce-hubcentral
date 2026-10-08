@@ -15,7 +15,7 @@ export const categoriesCarousel: Image[] = [
     text: "Smartphones",
   },
   {
-    id: "fragances",
+    id: "fragrances",
     url: fragances,
     alt: "Fragrâncias",
     text: "Fragrâncias",

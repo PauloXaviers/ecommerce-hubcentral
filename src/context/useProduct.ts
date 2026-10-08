@@ -25,10 +25,11 @@ export const useProduct = create<UseProduct>((set, get) => ({
       set(() => ({
         skip: 0,
         products: response.data,
+        selectedProduct: null,
         hasMore: true,
-        lastFetch: { type: 'default' },
         hasError: false,
         messageError: null,
+        lastFetch: { type: 'default' },
       }));
     } catch (err) {
       if (err instanceof Error) {
@@ -52,17 +53,23 @@ export const useProduct = create<UseProduct>((set, get) => ({
       const response = await searchProducts(query);
       if (response.data.length === 0) {
         set(() => ({
+          skip: 0,
+          products: null,
+          selectedProduct: null,
+          hasMore: false,
           hasError: true,
           messageError: 'Produtos não encontrados',
+          lastFetch: { type: 'search', query: query },
         }));
       } else {
         set(() => ({
-          products: response.data,
-          hasMore: false,
           skip: 0,
-          lastFetch: { type: 'search', query: query },
+          products: response.data,
+          selectedProduct: null,
+          hasMore: false,
           hasError: false,
-          messageError: "Não há mais produtos a serem carregados",
+          messageError: 'Não há mais produtos a serem carregados',
+          lastFetch: { type: 'search', query: query },
         }));
       }
     } catch (err) {
@@ -85,13 +92,27 @@ export const useProduct = create<UseProduct>((set, get) => ({
     set(() => ({ isLoading: true }));
     try {
       const response = await getProductById(id);
+      const productsByCategory = await getProductByCategory(response.data.category, 0);
+      if (productsByCategory.data.length < 12) {
+        set(() => ({
+          skip: 0,
+          products: productsByCategory.data,
+          selectedProduct: response.data,
+          hasMore: false,
+          hasError: false,
+          messageError: 'Não há mais produtos a serem carregados',
+          lastFetch: { type: 'category', query: response.data.category },
+        }));
+        return;
+      }
       set(() => ({
+        skip: 0,
+        products: productsByCategory.data,
         selectedProduct: response.data,
         hasMore: true,
-        skip: 0,
-        lastFetch: { type: 'default' },
         hasError: false,
         messageError: null,
+        lastFetch: { type: 'category', query: response.data.category },
       }));
     } catch (err) {
       if (err instanceof Error) {
@@ -113,13 +134,26 @@ export const useProduct = create<UseProduct>((set, get) => ({
     set(() => ({ isLoading: true }));
     try {
       const response = await getProductByCategory(query, 0);
+      if (response.data.length < 12) {
+        set(() => ({
+          skip: 0,
+          products: response.data,
+          selectedProduct: null,
+          hasMore: false,
+          hasError: false,
+          messageError: 'Não há mais produtos a serem carregados',
+          lastFetch: { type: 'category', query: query },
+        }));
+        return;
+      }
       set(() => ({
-        products: response.data,
-        hasMore: true,
         skip: 0,
-        lastFetch: { type: 'category', query: query },
+        products: response.data,
+        selectedProduct: null,
+        hasMore: true,
         hasError: false,
         messageError: null,
+        lastFetch: { type: 'category', query: query },
       }));
     } catch (err) {
       if (err instanceof Error) {
@@ -154,7 +188,14 @@ export const useProduct = create<UseProduct>((set, get) => ({
           break;
       }
 
-      if (newData.length === 0 || !newData) {
+      if (!newData || newData.length === 0) {
+        throw new Error('Não há mais produtos a serem carregados');
+      }
+      if (newData.length < 12) {
+        set(() => ({
+          skip: nextSkip,
+          products: products && [...products, ...newData],
+        }));
         throw new Error('Não há mais produtos a serem carregados');
       }
 
@@ -164,6 +205,7 @@ export const useProduct = create<UseProduct>((set, get) => ({
         hasMore: true,
         hasError: false,
         messageError: null,
+        lastFetch: lastFetch,
       }));
     } catch (err) {
       if (err instanceof Error) {
@@ -172,16 +214,21 @@ export const useProduct = create<UseProduct>((set, get) => ({
             hasMore: false,
             hasError: false,
             messageError: err.message,
+            lastFetch: lastFetch,
           }));
         } else if (err.message === 'A busca não suporta carregamento adicional') {
           set(() => ({
             hasMore: false,
+            hasError: false,
             messageError: 'Não foi possível carregar mais produtos',
+            lastFetch: lastFetch,
           }));
         } else {
           set(() => ({
+            hasMore: false,
             hasError: true,
             messageError: 'Erro em nossos servidores, por favor tente novamente mais tarde',
+            lastFetch: lastFetch,
           }));
         }
       }
