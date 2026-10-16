@@ -16,7 +16,7 @@ const RootLayout = () => {
   return (
     <>
       <Header ref={headerRef} />
-      <div style={{ paddingTop: `${headerHeight}px` }}>
+      <div style={{ paddingTop: `${headerHeight + 20}px` }}>
         <Outlet />
       </div>
       <Footer />

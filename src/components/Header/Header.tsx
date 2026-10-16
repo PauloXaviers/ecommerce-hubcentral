@@ -1,31 +1,44 @@
-import { forwardRef } from "react";
-import { navItems, topBarContactItems, topBarSocialtItems } from "../../data/header";
-import { Link, NavLink } from "react-router-dom";
-import { AnimatePresence, motion } from "motion/react";
-import { useHeader } from "../../hooks/useHeader";
-import userIcon from "../../assets/icons/account_circle.svg";
-import cartIcon from "../../assets/icons/add_shopping_cart.svg";
-import mobileMenu from "../../assets/icons/menu_mobile.svg";
-import closeMenu from "../../assets/icons/close.svg";
-import "./Header.scss";
-import MobileHeader from "./MobileHeader";
+import { forwardRef } from 'react';
+import { navItems, topBarContactItems, topBarSocialtItems } from '../../data/header';
+import { Link, NavLink } from 'react-router-dom';
+import { AnimatePresence, motion } from 'motion/react';
+import { useHeader } from '../../hooks/useHeader';
+import { ShoppingCartIcon, UserIcon, XIcon, ListIcon } from '@phosphor-icons/react';
+import { SearchInput } from './SearchInput';
+import './Header.scss';
+import MobileHeader from './MobileHeader';
 
 const Header = forwardRef<HTMLElement>((_, ref) => {
-  const { showMobileMenu, toggleMobileMenu, showTopBar, setSearchQuery, handleKeyDown } = useHeader();
+  const {
+    showMobileMenu,
+    toggleMobileMenu,
+    showTopBar,
+    setSearchQuery,
+    handleKeyDown,
+    handleClickSearch,
+    desktopInputRef,
+    mobileInputRef,
+  } = useHeader();
+
   return (
     <header ref={ref}>
       <AnimatePresence>
         {showTopBar && (
           <motion.div
-            initial={{ y: -50, opacity: 0 }}
-            animate={{ y: 0, opacity: 1, transition: { duration: 0.5 } }}
-            exit={{ y: -50, opacity: 0, transition: { duration: 0.5 } }}
+            layout
+            initial={{ opacity: 0 }}
+            animate={{
+              opacity: 1,
+              transition: { duration: 0.5, ease: 'linear' },
+            }}
+            exit={{ opacity: 0, transition: { duration: 0.5, ease: 'linear' } }}
+            style={{ overflow: 'hidden' }}
             className="topbar"
           >
             <ul>
               {topBarContactItems.map((item) => (
                 <li key={item.id}>
-                  <img src={item.icon} alt={`Logo do ${item.id}`} />
+                  <item.icon size={20} color="white" />
                   <span>{item.description}</span>
                 </li>
               ))}
@@ -35,8 +48,8 @@ const Header = forwardRef<HTMLElement>((_, ref) => {
               <p>{topBarSocialtItems.description}:</p>
               {topBarSocialtItems.icons.map((item) => (
                 <li key={item.id}>
-                  <a href={item.url ?? "#"} aria-label={`Link para ${item.id}`}>
-                    <img src={item.img} alt={`logo ${item.id}`} />
+                  <a href={item.url ?? '#'} aria-label={`Link para ${item.id}`}>
+                    <item.icon size={20} color="white" />
                   </a>
                 </li>
               ))}
@@ -54,7 +67,7 @@ const Header = forwardRef<HTMLElement>((_, ref) => {
             <ul>
               {navItems.map((item) => (
                 <li key={item.id}>
-                  <NavLink to={item.path} className={({ isActive }) => (isActive ? "active" : "")} >
+                  <NavLink to={item.path} className={({ isActive }) => (isActive ? 'active' : '')}>
                     {item.text}
                   </NavLink>
                 </li>
@@ -62,19 +75,15 @@ const Header = forwardRef<HTMLElement>((_, ref) => {
             </ul>
           </nav>
           <div className="container-icons">
-            <label className="sr-only" htmlFor="header-search">
-              Buscar produtos
-            </label>
-            <input
-              onKeyDown={handleKeyDown}
-              id="header-search"
-              type="search"
+            <SearchInput
               className="search-input"
-              onChange={(event) => setSearchQuery(event.target.value)}
-              placeholder="Iphone 13 Pro Max, Samsung, Camiseta..."
+              onSearchChange={setSearchQuery}
+              onKeyDown={handleKeyDown}
+              handleClickSearch={handleClickSearch}
+              inputRef={desktopInputRef}
             />
             <Link to="#">
-              <img src={userIcon} alt="Icone de usuário" />
+              <UserIcon size={24} />
               Entre/Cadastre-se
             </Link>
           </div>
@@ -82,25 +91,26 @@ const Header = forwardRef<HTMLElement>((_, ref) => {
 
         <div className="container-actions">
           <button aria-label="Abrir carrinho de compras">
-            <img src={cartIcon} alt="Icone de carrinho" />
+            <ShoppingCartIcon size={26} />
           </button>
-          <button aria-label="Abrir menu mobile" className="mobile-menu-button" onClick={toggleMobileMenu}>
-            <img src={!showMobileMenu ? mobileMenu : closeMenu} alt={!showMobileMenu ? "Abrir menu" : "Fechar menu"} />
+          <button
+            aria-label="Abrir menu mobile"
+            className="mobile-menu-button"
+            onClick={toggleMobileMenu}
+          >
+            {!showMobileMenu ? <ListIcon size={28} /> : <XIcon size={28} />}
           </button>
         </div>
       </section>
 
       <AnimatePresence>{showMobileMenu && <MobileHeader />}</AnimatePresence>
-      <label className="sr-only" htmlFor="header-search-mobile">
-        Buscar produtos
-      </label>
-      <input
-        onChange={(event) => setSearchQuery(event.target.value)}
-        onKeyDown={handleKeyDown}
-        id="header-search-mobile"
-        type="search"
+      <SearchInput
+        isMobile={true}
         className="search-input mobile"
-        placeholder="Iphone 13 Pro Max, Samsung, Camiseta..."
+        onSearchChange={setSearchQuery}
+        onKeyDown={handleKeyDown}
+        handleClickSearch={handleClickSearch}
+        inputRef={mobileInputRef}
       />
     </header>
   );
