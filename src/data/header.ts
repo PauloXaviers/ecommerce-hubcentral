@@ -1,25 +1,21 @@
-import phoneIcon from "../assets/icons/phone_forwarded.svg";
-import mailIcon from "../assets/icons/mail.svg";
-import instagramIcon from "../assets/icons/instagram.png";
-import youtubeIcon from "../assets/icons/youtube.png";
-import facebookIcon from "../assets/icons/facebook.png";
-import twitterIcon from "../assets/icons/twitter_old.png";
+import { PhoneIcon, MailboxIcon, InstagramLogoIcon, LinkedinLogoIcon } from '@phosphor-icons/react';
+import { type Icon } from '@phosphor-icons/react';
 
 interface TopBarContactItems {
   id: string;
   description: string;
-  icon: string;
+  icon: Icon;
 }
 
-interface Icon {
+interface SocialIcon {
   id: string;
-  img: string;
+  icon: Icon;
   url?: string;
 }
 
 interface TopBarSocialItems {
   description: string;
-  icons: Icon[];
+  icons: SocialIcon[];
 }
 
 interface NavItems {
@@ -30,53 +26,45 @@ interface NavItems {
 
 export const topBarContactItems: TopBarContactItems[] = [
   {
-    id: "contact",
-    description: "(225) 555-0118",
-    icon: phoneIcon,
+    id: 'contact',
+    description: '(225) 555-0118',
+    icon: PhoneIcon,
   },
   {
-    id: "mail ",
-    description: "hubcentral@hubcentral.com",
-    icon: mailIcon,
+    id: 'mail ',
+    description: 'hubcentral@hubcentral.com',
+    icon: MailboxIcon,
   },
 ];
 
 export const topBarSocialtItems: TopBarSocialItems = {
-  description: "Siga-nos",
+  description: 'Siga-nos',
   icons: [
     {
-      id: "instagram",
-      img: instagramIcon,
+      id: 'instagram',
+      icon: InstagramLogoIcon,
     },
     {
-      id: "youtube",
-      img: youtubeIcon,
-    },
-    {
-      id: "facebook",
-      img: facebookIcon,
-    },
-    {
-      id: "twitter",
-      img: twitterIcon,
+      id: 'youtube',
+      icon: LinkedinLogoIcon,
     },
   ],
 };
 
 export const navItems: NavItems[] = [
   {
-    id: "home",
-    path: "/",
-    text: "Ínicio",
+    id: 'home',
+    path: '/',
+    text: 'Ínicio',
   },
   {
-    id: "parceiros",
-    path: "/parceiros",
-    text: "Parceiros",
+    id: 'parceiros',
+    path: '/parceiros',
+    text: 'Parceiros',
   },
   {
-    id: "contato",
-    path: "/contato",
-    text: "Contato",
+    id: 'contato',
+    path: '/contato',
+    text: 'Contato',
   },
 ];
