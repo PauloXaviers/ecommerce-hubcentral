@@ -5,9 +5,11 @@ import { motion } from 'motion/react';
 import './ProductDetails.scss';
 import { useProductDetails } from '../../hooks/useProductDetails';
 import { useEffect } from 'react';
+import { useCart } from '../../context/useCart';
 
 const ProductDetails = () => {
   const product = useProduct((state) => state.selectedProduct);
+  const addCart = useCart((state) => state.addCart);
 
   const {
     carouselContainerRef,
@@ -23,6 +25,10 @@ const ProductDetails = () => {
       document.title = `Compre agora ${product.title} | Ecommerce HubCentral`;
     }
   }, [product]);
+
+  if (!product) {
+    return <p>Não há produto a ser listado</p>;
+  }
 
   return (
     <section className="product-main">
@@ -64,7 +70,14 @@ const ProductDetails = () => {
           <p className="new-price">{currencyFormatter((product?.price * 5.8) / 2)}</p>
         </div>
         <div className="container">
-          <Button buttonColor="gray-medium">Adicionar ao carrinho</Button>
+          <Button
+            type="button"
+            buttonColor="gray-medium"
+            onClick={() => addCart(product)}
+            aria-label={`Adicionar ${product?.title} ao carrinho`}
+          >
+            Adicionar ao carrinho
+          </Button>
           <Button buttonColor="green">Comprar</Button>
         </div>
       </div>

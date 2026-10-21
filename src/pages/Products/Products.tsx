@@ -19,7 +19,7 @@ const Products = () => {
   const paramsQuery: ParamsQuery = useMemo(
     () => ({
       type: searchParams.get('type') as ParamsQuery['type'],
-      query: searchParams.get('query'),
+      query: searchParams.get('query') ?? '',
     }),
     [searchParams]
   );
