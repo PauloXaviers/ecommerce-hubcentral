@@ -8,7 +8,9 @@
   padding: 15px;
   gap: 10px;
   border: none;
-  cursor: pointer;
+  &.clickable {
+    cursor: pointer;
+  }
   h3 {
     font-weight: var.$font-weight-bold;
     color: var.$gray-dark-color;

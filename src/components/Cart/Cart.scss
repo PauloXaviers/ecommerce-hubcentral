@@ -1,0 +1,112 @@
+@use '../../styles/mixins' as mix;
+@use '../../styles/variables' as var;
+
+aside {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100%;
+  background-color: var.$light-color;
+  box-shadow: -20px 0px 15px -5px rgba(0, 0, 0, 0.5);
+  z-index: 300;
+  button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+  }
+  .cart-main {
+    position: relative;
+    height: 100%;
+    @include mix.flex-center('column');
+    align-items: start;
+    padding: 70px 30px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    .close-cart {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      transition: transform 0.5s ease;
+      &:hover {
+        transform: scale(0.9);
+      }
+    }
+    p {
+      font-size: clamp(0.875rem, 5vw, 1rem);
+      color: var.$gray-dark-color;
+    }
+    .card-container {
+      @include mix.flex-center(column);
+      gap: 20px 0px;
+      align-items: start;
+
+      p {
+        color: var.$green-color;
+        font-weight: var.$font-weight-semibold;
+        font-size: clamp(0.855rem, 2vw, 1rem);
+      }
+      .controls-cart-container {
+        @include mix.flex-center(row);
+        gap: 10px;
+        span {
+          font-size: clamp(0.855rem, 2vw, 1rem);
+          color: var.$gray-dark-color;
+        }
+        button {
+          transition: transform 0.5s ease;
+          &:hover {
+            transform: scale(1.1);
+          }
+        }
+      }
+    }
+    .container-actions-footer {
+      position: fixed;
+      bottom: 0px;
+      height: 60px;
+      background-color: var.$light-color;
+      @include mix.flex-center(row);
+      gap: 20px;
+    }
+  }
+}
+
+@media (max-width: 539px) {
+  aside,
+  .container-actions-footer {
+    width: 100vw;
+  }
+}
+@media screen and (min-width: 540px) and (max-width: 639px) {
+  aside {
+    width: 70vw;
+  }
+  .container-actions-footer {
+    width: 67vw;
+  }
+}
+
+@media screen and (min-width: 640px) and (max-width: 767px) {
+  aside {
+    width: 60vw;
+  }
+  .container-actions-footer {
+    width: 57vw;
+  }
+}
+@media screen and (min-width: 768px) and (max-width: 1000px) {
+  aside {
+    width: 50vw;
+  }
+  .container-actions-footer {
+    width: 47vw;
+  }
+}
+@media (min-width: 1001px)  {
+  aside {
+    width: 37vw;
+  }
+  .container-actions-footer {
+    width: 34vw;
+  }
+}

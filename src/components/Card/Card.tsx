@@ -10,19 +10,30 @@ const Card = ({
   direction = "column",
   onClick,
 }: CardProps) => {
-  return (
-    <button
-      type="button"
-      className={`${className} ${direction}`}
-      onClick={onClick}
-      aria-label={`${title}. ${description}`}
-    >
+  const cardClassName = `${className} ${direction}${onClick ? " clickable" : ""}`;
+  const cardContent = (
+    <>
       <img src={image} alt={`Imagem de ${title}`} loading="lazy" className="card-image" draggable="false" />
       <div className="card-text">
         <h3>{title}</h3>
         <h4>{description.slice(0, 40)}...</h4>
         {children}
       </div>
+    </>
+  );
+
+  if (!onClick) {
+    return <div className={cardClassName}>{cardContent}</div>;
+  }
+
+  return (
+    <button
+      type="button"
+      className={cardClassName}
+      onClick={onClick}
+      aria-label={`${title}. ${description}`}
+    >
+      {cardContent}
     </button>
   );
 };

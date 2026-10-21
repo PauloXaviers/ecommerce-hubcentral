@@ -7,6 +7,7 @@ import { ShoppingCartIcon, UserIcon, XIcon, ListIcon } from '@phosphor-icons/rea
 import { SearchInput } from './SearchInput';
 import './Header.scss';
 import MobileHeader from './MobileHeader';
+import { useCart } from '../../context/useCart';
 
 const Header = forwardRef<HTMLElement>((_, ref) => {
   const {
@@ -20,6 +21,7 @@ const Header = forwardRef<HTMLElement>((_, ref) => {
     mobileInputRef,
   } = useHeader();
 
+  const toggleCartOpen = useCart((state) => state.toggleCartOpen)
   return (
     <header ref={ref}>
       <AnimatePresence>
@@ -90,7 +92,7 @@ const Header = forwardRef<HTMLElement>((_, ref) => {
         </div>
 
         <div className="container-actions">
-          <button aria-label="Abrir carrinho de compras">
+          <button aria-label="Abrir carrinho de compras" onClick={toggleCartOpen}>
             <ShoppingCartIcon size={26} />
           </button>
           <button
