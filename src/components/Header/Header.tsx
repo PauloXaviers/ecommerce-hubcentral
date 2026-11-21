@@ -84,7 +84,7 @@ const Header = forwardRef<HTMLElement>((_, ref) => {
               handleClickSearch={handleClickSearch}
               inputRef={desktopInputRef}
             />
-            <Link to="#">
+            <Link to="/signin">
               <UserIcon size={24} />
               Entre/Cadastre-se
             </Link>
