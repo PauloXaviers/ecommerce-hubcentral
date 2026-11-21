@@ -19,11 +19,11 @@ const App = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [pathname, search]);
 
-  const { user } = useAuth()
+  const { user } = useAuth();
   return (
     <SkeletonTheme baseColor="#EBEBEB" highlightColor="rgba(0,0,0,0.25)">
       <Toaster
-        position="bottom-left"
+        position="top-center"
         toastOptions={{
           duration: 2500,
           style: { backgroundColor: '#ffffff', color: '#2c2c2c' },

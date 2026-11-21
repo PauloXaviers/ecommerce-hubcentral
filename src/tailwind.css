@@ -6,6 +6,7 @@
 
 @source './components/ui';
 @source './pages/Auth';
+@source './components/';
 
 @custom-variant dark (&:is(.dark *));
 
