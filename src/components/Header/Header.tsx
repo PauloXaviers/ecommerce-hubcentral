@@ -3,11 +3,28 @@ import { navItems, topBarContactItems, topBarSocialtItems } from '../../data/hea
 import { Link, NavLink } from 'react-router-dom';
 import { AnimatePresence, motion } from 'motion/react';
 import { useHeader } from '../../hooks/useHeader';
-import { ShoppingCartIcon, UserIcon, XIcon, ListIcon } from '@phosphor-icons/react';
+import {
+  ShoppingCartIcon,
+  UserIcon,
+  XIcon,
+  ListIcon,
+  PackageIcon,
+  SignOutIcon,
+} from '@phosphor-icons/react';
 import { SearchInput } from './SearchInput';
 import './Header.scss';
 import MobileHeader from './MobileHeader';
 import { useCart } from '../../context/useCart';
+import { useAuth } from '@/context/auth/useAuth';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuTrigger,
+} from '../ui/dropdown-menu';
+import { Button } from '../ui/button';
 
 const Header = forwardRef<HTMLElement>((_, ref) => {
   const {
@@ -19,9 +36,11 @@ const Header = forwardRef<HTMLElement>((_, ref) => {
     handleClickSearch,
     desktopInputRef,
     mobileInputRef,
+    handleClickSignOut,
   } = useHeader();
 
-  const toggleCartOpen = useCart((state) => state.toggleCartOpen)
+  const toggleCartOpen = useCart((state) => state.toggleCartOpen);
+  const user = useAuth((state) => state.user);
   return (
     <header ref={ref}>
       <AnimatePresence>
@@ -84,10 +103,36 @@ const Header = forwardRef<HTMLElement>((_, ref) => {
               handleClickSearch={handleClickSearch}
               inputRef={desktopInputRef}
             />
-            <Link to="/signin">
-              <UserIcon size={24} />
-              Entre/Cadastre-se
-            </Link>
+            {user ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger render={<Button variant={'outline'}>Conta</Button>} />
+                <DropdownMenuContent className="tw:w-fit">
+                  <DropdownMenuGroup>
+                    <DropdownMenuLabel>Conta</DropdownMenuLabel>
+                  </DropdownMenuGroup>
+                  <DropdownMenuItem>
+                    <NavLink to="/user-settings" className="tw:text-inherit tw:no-underline tw:flex tw:justify-center tw:items-center">
+                      <UserIcon />
+                      Meus dados
+                    </NavLink>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                     <NavLink to="/orders" className="tw:text-inherit tw:no-underline tw:flex tw:justify-center tw:items-center ">
+                      <PackageIcon />
+                      Meus pedidos
+                    </NavLink>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem variant="destructive" onClick={handleClickSignOut}>
+                    <SignOutIcon /> Sair da conta
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <Link to="/signin">
+                <UserIcon size={24} />
+                Entre/Cadastre-se
+              </Link>
+            )}
           </div>
         </div>
 

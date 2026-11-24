@@ -4,6 +4,7 @@ import { handleProductNavigation } from '../utils/productNavigation';
 import { useSearchParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
+import { signOutUser } from '@/api/auth/signOut';
 
 export const useHeader = () => {
   const [showMobileMenu, setShowMobileMenu] = useState<boolean>(false);
@@ -15,7 +16,6 @@ export const useHeader = () => {
   const location = useLocation();
   const desktopInputRef = useRef<HTMLInputElement | null>(null);
   const mobileInputRef = useRef<HTMLInputElement | null>(null);
-
   useMotionValueEvent(scrollY, 'change', (latest) => {
     if (latest > 200) {
       setShowTopBar(false);
@@ -68,6 +68,14 @@ export const useHeader = () => {
     }
   };
 
+  const handleClickSignOut = async () => {
+    try {
+      await signOutUser();
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return {
     desktopInputRef,
     mobileInputRef,
@@ -77,5 +85,6 @@ export const useHeader = () => {
     showTopBar,
     setSearchQuery,
     handleKeyDown,
+    handleClickSignOut,
   };
 };

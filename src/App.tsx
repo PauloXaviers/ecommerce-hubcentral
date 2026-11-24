@@ -11,6 +11,7 @@ import SignUp from './pages/Auth/SignUp';
 import ForgetPassword from './pages/Auth/ForgetPassword';
 import { useAuth } from './context/auth/useAuth';
 import { Navigate } from 'react-router-dom';
+import UserSettings from './pages/Auth/UserSettings/UserSettings';
 
 const App = () => {
   const { pathname, search } = useLocation();
@@ -18,11 +19,11 @@ const App = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [pathname, search]);
 
-  const { user } = useAuth()
+  const { user } = useAuth();
   return (
     <SkeletonTheme baseColor="#EBEBEB" highlightColor="rgba(0,0,0,0.25)">
       <Toaster
-        position="bottom-left"
+        position="top-center"
         toastOptions={{
           duration: 2500,
           style: { backgroundColor: '#ffffff', color: '#2c2c2c' },
@@ -32,10 +33,14 @@ const App = () => {
         <Route path="/" element={<RootLayout />}>
           <Route index element={<Home />} />
           <Route path="/products" element={<Products />} />
+          <Route
+            path="/user-settings"
+            element={user ? <UserSettings /> : <Navigate to="/signin" replace />}
+          />
         </Route>
         <Route path="/signin" element={user ? <Navigate to="/" replace /> : <SignIn />} />
         <Route path="/signup" element={user ? <Navigate to="/" replace /> : <SignUp />} />
-        <Route path="forget-password" element={<ForgetPassword />} />
+        <Route path="/forget-password" element={user ? <Navigate to="/" replace /> : <ForgetPassword />} />
       </Routes>
     </SkeletonTheme>
   );
