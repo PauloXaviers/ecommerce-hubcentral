@@ -10,14 +10,14 @@ import {
   DialogDescription,
   DialogFooter,
   DialogHeader,
+  DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
 import InputController from '@/components/InputController/InputController';
 import ActionsButtons from '@/components/ActionsButtons/ActionsButtons';
 import SocialMedia from '@/components/SocialMedia/SocialMedia';
 import './UserSettings.scss';
-import { signOut } from 'firebase/auth';
-import { auth } from '@/config/firebase';
+import { signOutUser } from '@/api/auth/signOut';
 
 const UserSettings = () => {
   const settings = useSettings();
@@ -120,7 +120,7 @@ const UserSettings = () => {
               variant="outline"
               disabled={settings.isLoading}
               className="tw:text-[#2c2c2c]"
-              onClick={async () => await signOut(auth)}
+              onClick={async () => await signOutUser()}
             >
               <SignOutIcon />
               Sair da conta
@@ -137,7 +137,9 @@ const UserSettings = () => {
                 }
               />
               <DialogContent showCloseButton={false}>
-                <DialogHeader>Tem certeza que deseja excluir sua conta?</DialogHeader>
+                <DialogHeader>
+                  <DialogTitle>Tem certeza que deseja excluir sua conta?</DialogTitle>
+                </DialogHeader>
                 <DialogDescription>Esta ação não pode ser desfeita.</DialogDescription>
                 <DialogFooter>
                   <DialogClose render={<Button variant="outline">Cancelar</Button>} />
